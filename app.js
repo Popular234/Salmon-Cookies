@@ -1,5 +1,6 @@
-const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+'use strict'
 
+const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
 
 
@@ -7,21 +8,16 @@ const tableElement = document.getElementById('sales-table');
 
 
 
-
-
-
-
-// TODO: pass minCustomersPerHour, maxCustomersPerHour, and avgCookiesPerHour as parameters of this function
-
-
-// set them as dynamic properties inside of this (based on their passed in data)
-
-
 function CookieStand(locationName, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerSale) {
 
 
  this.locationName = locationName;
 
+ this.minCustomersPerHour = minCustomersPerHour;
+
+ this.maxCustomersPerHour = maxCustomersPerHour;
+
+ this.avgCookiesPerSale = avgCookiesPerSale;
 
  this.customersEachHour = [];
 
@@ -31,16 +27,8 @@ function CookieStand(locationName, minCustomersPerHour, maxCustomersPerHour, avg
 
  this.totalDailyCookies = 0;
 
-
- // TODO: // push "this" object to the CookieStand.all array on every instantiation
-
-
+ CookieStand.all.push(this);
 }
-
-
-
-
-
 
 
 CookieStand.prototype.calcCustomersEachHour = function() {
@@ -58,16 +46,9 @@ CookieStand.prototype.calcCustomersEachHour = function() {
 };
 
 
-
-
-
-
-
 CookieStand.prototype.calcCookiesEachHour = function() {
 
-
- // TODO: invoke the method that calculates number of customers each hour here
-
+ this.calcCustomersEachHour();
 
  for (let i = 0; i < hours.length; i++) {
 
@@ -87,15 +68,10 @@ CookieStand.prototype.calcCookiesEachHour = function() {
 };
 
 
-
-
-
-
-
 CookieStand.prototype.render = function() {
 
 
- // TODO: generate the calculation of customers each hour here
+ this.calcCookiesEachHour()
 
 
  const tableRow = document.createElement('tr');
@@ -140,22 +116,18 @@ CookieStand.prototype.render = function() {
 };
 
 
-
-
-
-
-
 CookieStand.all = [];
 
 
+new CookieStand('Seatle', 12, 24, 6.2);
 
+new CookieStand('Tokyo', 16, 78, 9);
 
+new CookieStand('Dubai', 6, 102, 1.2);
 
+new CookieStand('Paris', 9, 46, 4.3);
 
-
-// TODO: instantiate all CookieStand objects (with sample data)
-
-
+new CookieStand('Lima', 15, 67, 11.2);
 
 
 
@@ -249,7 +221,7 @@ function makeFooterRow() {
    let hourlyTotal = 0;
 
 
-   for (const j = 0; j < CookieStand.all.length; j++){
+   for (let j = 0; j < CookieStand.all.length; j++){
 
 
      hourlyTotal += CookieStand.all[j].cookiesEachHour[i];
@@ -325,7 +297,7 @@ function makeFooterRow() {
 const ocean = document.getElementById('ocean'),
 
 
- waveWidth = 10,
+ waveWidth = 15,
 
 
  waveCount = Math.floor(window.innerWidth/waveWidth),
@@ -360,7 +332,11 @@ for(let i = 0; i < waveCount; i++){
 }
 
 
+movefish()
 
+function movefish(){
+  setTimeout(movefish, 10)
+}
 
 
 
